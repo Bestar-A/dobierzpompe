@@ -1,141 +1,12 @@
 let selectedRowId = null;
 
-const flow_rate_user_input = document.getElementById("flow_rate_user");
-const diameterSelect = document.getElementById("pipe_diameter_user");
-
 var minus = document.getElementById("minus");
 var plus = document.getElementById("plus");
 // Assuming minus and plus are defined elsewhere
 minus.addEventListener("click", updateFlowVisualization);
 plus.addEventListener("click", updateFlowVisualization);
 
-// Aktualizacja przy zmianie wartości
-flow_rate_user_input.addEventListener("input", updateFlowVisualization);
-diameterSelect.addEventListener("change", updateFlowVisualization);
-
-var inputField = document.getElementById("flow_rate_user");
-var dropdownItems = document.querySelectorAll(".dropdown-menu .dropdown-item");
-var measurementUnitDisplay = document.getElementById("measurementUnit");
-
-let storedResponseData = null; // Store the response data in a variable so that it can be accessed later
-document.getElementById("submit1").addEventListener("click", submitForm);
 document.getElementById("submit2").addEventListener("click", submitForm);
-
-async function submitForm() {
-	console.log("logging csrf");
-	console.log(getCookie("csrftoken"));
-	console.log("end of logging csrf");
-	const waiting = document.getElementById("waiting");
-	waiting.style.display = "";
-	waiting.style.zIndex = "20000";
-	const measurementUnitDisplay = document.getElementById("measurementUnit");
-	console.log(measurementUnitDisplay);
-	const measurementUnit = measurementUnitDisplay.getAttribute("value"); // e.g., "m3h", "m3m", etc.
-	console.log(measurementUnit);
-	// retrieve currentUnitFullName based on the unitAbbreviationsNotations and tag value of measurementUnitDisplay
-	const currentUnitFullName = Object.keys(unitAbbreviationsNotations).find((key) => unitAbbreviationsNotations[key] === measurementUnit);
-	console.log(currentUnitFullName);
-	var flow_rate_user = parseFloat(document.getElementById("flow_rate_user").value.replace(/,/g, "."));
-	console.log(flow_rate_user);
-	flow_rate_user = toBaseUnit(flow_rate_user, currentUnitFullName);
-	console.log(flow_rate_user);
-	let lift_height_user_value = parseFloat(document.getElementById("lift_height_user").value.replace(/,/g, "."));
-	let lift_height_user = isNaN(lift_height_user_value) ? 0 : lift_height_user_value.toFixed(0);
-
-	let pipe_length_value = parseFloat(document.getElementById("pipe_length_user").value.replace(/,/g, "."));
-	let pipe_length_user = isNaN(pipe_length_value) ? 0 : pipe_length_value.toFixed(0);
-
-	console.log(flow_rate_user);
-	console.log(currentUnitFullName);
-	//const h = document.getElementById('lift_height_user').value;
-	//const pipe_length = document.getElementById('pipe_length_user').value;
-	const diameter = document.getElementById("pipe_diameter_user").value;
-	const checkboxes = {
-		S: document.getElementById("free").checked ? document.getElementById("free").value : null,
-		W: document.getElementById("forced").checked ? document.getElementById("forced").value : null,
-		Z: document.getElementById("closed").checked ? document.getElementById("closed").value : null,
-		K: document.getElementById("canal").checked ? document.getElementById("canal").value : null,
-		R: document.getElementById("shredder").checked ? document.getElementById("shredder").value : null,
-		lowerfit: document.getElementById("lowerfit").checked ? document.getElementById("lowerfit").value : null,
-	};
-	let checkedKeys = [];
-	for (let key in checkboxes) {
-		if (checkboxes[key] !== null) {
-			checkedKeys.push(`'${key}'`);
-		}
-	}
-
-	let hydraulicTypesString = "(" + checkedKeys.join(",") + ")";
-	console.log(hydraulicTypesString); // Outputs something like: ('S','W','Z','K','R')
-	const radioValue = document.querySelector('input[name="radioOption"]:checked') ? document.querySelector('input[name="radioOption"]:checked').value : null;
-	// make validation that flow_rate_user,lift_height_user,l are higher or equal 1
-	console.log(flow_rate_user);
-	if (parseFloat(document.getElementById("flow_rate_user").value) < 0.0009 || lift_height_user < 1 || pipe_length_user < 1) {
-		alert("Wartości Q, H i L muszą być większe od 1");
-		waiting.style.display = "none";
-		// stop processing submit function
-		return;
-	}
-
-	const data = {
-		measurementUnit: "m3h", // Always send m3/h to the backend
-
-		flow_rate_user,
-		lift_height_user,
-		pipe_length_user,
-		diameter,
-		hydraulic_types: hydraulicTypesString,
-		lowerfit: document.getElementById("lowerfit").checked ? document.getElementById("lowerfit").value : null,
-		radioValue,
-	};
-
-	console.log("Sending Data:", JSON.stringify(data));
-
-	const response = await fetch("/general_post/", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			"X-CSRFToken": getCookie("csrftoken"),
-		},
-		body: JSON.stringify(data),
-	});
-
-	storedResponseData = await response.json(); // Store responseData
-	// if storedResponse is an empty Array insert innerHTML to several fields
-
-	console.log("Response:", storedResponseData);
-
-	// Call renderTable after the fetch request is completed
-	renderTable(storedResponseData);
-
-	showCards();
-	waiting.style.display = "none";
-
-	if (storedResponseData.length === 0) {
-		plotHydraulicImg = document.getElementById("plotHydraulic");
-		plotHydraulicImg.src = "/images/oops.png";
-		plotPowerImg = document.getElementById("plotPower");
-		plotPowerImg.src = "/images/pixel.png";
-		rotorImg = document.getElementById("rotorImage");
-		rotorImg.src = "/images/pixel.png";
-		plotHydraulicImg.style.margin = "auto";
-		plotPowerImg.style.margin = "auto";
-		rotorImg.style.margin = "auto";
-		innerHTML("pump_name", "");
-		innerHTML("hydraulikah4", "BRAK WYNIKÓW");
-		innerHTML("wyniki", "BRAK WYNIKÓW");
-		innerHTML("flow_actual", "");
-		innerHTML("flow_rate_user_td", "");
-		innerHTML("lift_height_required", "");
-		innerHTML("lift_height_actual", "");
-		innerHTML("power_actual", "");
-		innerHTML("rotorShortDescription", "");
-		waiting.style.display = "none";
-	} else {
-		innerHTML("wyniki", "Wyniki");
-		innerHTML("hydraulikah4", "Hydraulika pompy oraz rurociągu");
-	}
-}
 
 function showCards() {
 	document.getElementById("card3").style.display = "block";
@@ -143,21 +14,6 @@ function showCards() {
 	document.getElementById("card5").style.display = "block";
 	document.getElementById("card6").style.display = "block";
 	document.getElementById("tableContainer").scrollIntoView();
-}
-
-function getCookie(name) {
-	let cookieValue = null;
-	if (document.cookie && document.cookie !== "") {
-		const cookies = document.cookie.split(";");
-		for (let i = 0; i < cookies.length; i++) {
-			const cookie = cookies[i].trim();
-			if (cookie.substring(0, name.length + 1) === name + "=") {
-				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-				break;
-			}
-		}
-	}
-	return cookieValue;
 }
 
 function renderTable(data) {

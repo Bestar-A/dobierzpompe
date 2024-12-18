@@ -21,7 +21,13 @@
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<title>DobierzPompe.pl | MEPROZET | Brzeska Pump and Fittings Factory</title>
 	</head>
-	<body class="bg-[#FAFAFA] font-poppins flex flex-col text-dark">
+	<body class="bg-[#FAFAFA] font-poppins flex flex-col text-dark relative">
+		<div class="fixed top-0 left-0 w-full h-screen bg-[#ffffff3f] z-[20000]" style="display: none; backdrop-filter: blur(8px)" id="waiting">
+			<div class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
+				<div class="m-auto absolute border-4 border-[#196fd2] bg-transparent rounded-full animate-loading" style="animation-delay: 0.5s"></div>
+				<div class="m-auto absolute border-4 border-[#196fd2] rounded-full animate-loading"></div>
+			</div>
+		</div>
 		<header class="pt-7 pb-1.5 lg:pb-0 lg:pt-[1px] flex justify-between lg:bg-white lg:shadow-[0px_1px_0px_0px_#ADADAD1A]">
 			<img src="./images/logo.png" alt="MEPROZET" width="160" height="34" style="width: 160px; height: 34px" class="ml-7 my-auto" />
 			<div class="mt-5 gap-[35px] hidden lg:flex">
@@ -178,57 +184,56 @@
 					</div>
 				</div>
 				<div class="mt-[30px] lg:mt-6 max-w-[370px] w-full">
-					<button class="bg-primary text-white rounded-[5px] py-3 font-semibold leading-[26px] w-full">Search</button>
+					<button class="bg-primary text-white rounded-[5px] py-3 font-semibold leading-[26px] w-full" id="submit1">Search</button>
 				</div>
 			</section>
-			<section
-				id="filter-section"
-				class="flex justify-between gap-10 flex-col lg:flex-row lg:ps-8 lg:pe-[25px] px-6 items-center shadow-card rounded-[20px] lg:rounded-[1px] py-6 lg:py-0 bg-white"
-			>
-				<div class="flex w-full flex-col lg:flex-row">
-					<div class="flex gap-2.5 items-center">
-						<div class="w-6 h-6 flex items-center justify-center">
-							<img src="./images/filter.svg" alt="#" width="20" height="19" />
+			<section id="card7" style="display: none" class="lg:ps-8 lg:pe-[25px] px-6 items-center shadow-card rounded-[20px] lg:rounded-[1px] py-6 lg:py-0 bg-white">
+				<div class="flex justify-between gap-10 flex-col lg:flex-row">
+					<div class="flex w-full flex-col lg:flex-row">
+						<div class="flex gap-2.5 items-center">
+							<div class="w-6 h-6 flex items-center justify-center">
+								<img src="./images/filter.svg" alt="#" width="20" height="19" />
+							</div>
+							<div class="text-lg font-medium leading-[30px]">Filter</div>
 						</div>
-						<div class="text-lg font-medium leading-[30px]">Filter</div>
-					</div>
-					<div class="pt-6 lg:pt-2 lg:pb-[14px] lg:ps-[30px]">
-						<div class="uppercase text-[#95979D] text-sm leading-[23px]">rotor type</div>
-						<div class="flex gap-x-12 gap-y-7 lg:gap-[22px] flex-wrap mt-2.5">
-							<div class="form-check form-check-primary flex gap-2.5">
-								<input class="form-check-input cursor-pointer" type="checkbox" value="True" id="free" checked="" data-umami-event="Swobodny" />
-								<label class="form-check-label select-none cursor-pointer leading-[26px] text-dark" for="free">Free</label>
+						<div class="pt-6 lg:pt-2 lg:pb-[14px] lg:ps-[30px]">
+							<div class="uppercase text-[#95979D] text-sm leading-[23px]">rotor type</div>
+							<div class="flex gap-x-12 gap-y-7 lg:gap-[22px] flex-wrap mt-2.5">
+								<div class="form-check form-check-primary flex gap-2.5">
+									<input class="form-check-input cursor-pointer" type="checkbox" value="True" id="free" checked="" data-umami-event="Swobodny" />
+									<label class="form-check-label select-none cursor-pointer leading-[26px] text-dark" for="free">Free</label>
+								</div>
+								<div class="form-check form-check-primary flex gap-2.5">
+									<input class="form-check-input cursor-pointer" type="checkbox" value="True" id="forced" checked="" data-umami-event="Wymuszony" />
+									<label class="form-check-label select-none cursor-pointer leading-[26px] text-dark" for="forced">Forced</label>
+								</div>
+								<div class="form-check form-check-primary flex gap-2.5">
+									<input class="form-check-input cursor-pointer" type="checkbox" value="True" id="closed" checked="" data-umami-event="Zamknięty" />
+									<label class="form-check-label select-none cursor-pointer leading-[26px] text-dark" for="closed">Closed</label>
+								</div>
+								<div class="form-check form-check-primary flex gap-2.5">
+									<input class="form-check-input cursor-pointer" type="checkbox" value="True" id="canal" checked="" data-umami-event="Kanałowy" />
+									<label class="form-check-label select-none cursor-pointer leading-[26px] text-dark" for="canal">(F)analog</label>
+								</div>
+								<div class="form-check form-check-primary flex gap-2.5">
+									<input class="form-check-input cursor-pointer" type="checkbox" value="True" id="shredder" checked="" data-umami-event="Rozdrabniający" />
+									<label class="form-check-label select-none cursor-pointer leading-[26px] text-dark" for="shredder">(R)eminitive</label>
+								</div>
 							</div>
-							<div class="form-check form-check-primary flex gap-2.5">
-								<input class="form-check-input cursor-pointer" type="checkbox" value="True" id="forced" checked="" data-umami-event="Wymuszony" />
-								<label class="form-check-label select-none cursor-pointer leading-[26px] text-dark" for="forced">Forced</label>
-							</div>
-							<div class="form-check form-check-primary flex gap-2.5">
-								<input class="form-check-input cursor-pointer" type="checkbox" value="True" id="closed" checked="" data-umami-event="Zamknięty" />
-								<label class="form-check-label select-none cursor-pointer leading-[26px] text-dark" for="closed">Closed</label>
-							</div>
-							<div class="form-check form-check-primary flex gap-2.5">
-								<input class="form-check-input cursor-pointer" type="checkbox" value="True" id="canal" checked="" data-umami-event="Kanałowy" />
-								<label class="form-check-label select-none cursor-pointer leading-[26px] text-dark" for="canal">(F)analog</label>
-							</div>
-							<div class="form-check form-check-primary flex gap-2.5">
-								<input class="form-check-input cursor-pointer" type="checkbox" value="True" id="shredder" checked="" data-umami-event="Rozdrabniający" />
-								<label class="form-check-label select-none cursor-pointer leading-[26px] text-dark" for="shredder">(R)eminitive</label>
+						</div>
+						<div class="pt-8 lg:pt-2 lg:pb-[14px] lg:ps-[38px]">
+							<div class="uppercase text-[#95979D] text-sm leading-[23px]">rotor type</div>
+							<div class="form-check form-check-danger mt-2.5 flex gap-2.5">
+								<input class="form-check-input cursor-pointer" type="checkbox" value="True" id="lowerfit" data-umami-event="Lowerfit" />
+								<label class="form-check-label select-none cursor-pointer" for="lowerfit">View lower fit pumps</label>
 							</div>
 						</div>
 					</div>
-					<div class="pt-8 lg:pt-2 lg:pb-[14px] lg:ps-[38px]">
-						<div class="uppercase text-[#95979D] text-sm leading-[23px]">rotor type</div>
-						<div class="form-check form-check-danger mt-2.5 flex gap-2.5">
-							<input class="form-check-input cursor-pointer" type="checkbox" value="True" id="lowerfit" data-umami-event="Lowerfit" />
-							<label class="form-check-label select-none cursor-pointer" for="lowerfit">View lower fit pumps</label>
-						</div>
-					</div>
+					<button class="py-3 my-4 w-[236px] text-center bg-primary rounded-[5px] font-semibold leading-[26px] text-white">Refresh</button>
 				</div>
-				<button class="py-3 my-4 w-[236px] text-center bg-primary rounded-[5px] font-semibold leading-[26px] text-white">Refresh</button>
 			</section>
 			<section class="grid gap-x-[15px] grid-cols-1 lg:grid-cols-3 gap-y-6">
-				<div class="shadow-card rounded-[20px] lg:rounded-none bg-white mb-auto">
+				<div class="shadow-card rounded-[20px] lg:rounded-none bg-white mb-auto" id="card3" style="display: none">
 					<div class="pt-[19px] pb-[17px] ps-[23px] lg:py-[18px] lg:ps-[30px] shadow-[0px_1px_0px_0px_#f2f2f2]">
 						<div class="font-medium lg:text-[22px] lg:leading-[36px]">Result</div>
 						<div class="mt-1 lg:mt-3 text-[12px] lg:text-sm font-medium lg:leading-[23px] text-[#A2A3A5]">Select any of the row below see the result</div>
@@ -344,7 +349,7 @@
 						</table>
 					</div>
 				</div>
-				<div class="shadow-card rounded-[20px] lg:rounded-none bg-white mb-auto">
+				<div class="shadow-card rounded-[20px] lg:rounded-none bg-white mb-auto" id="card4" style="display: none">
 					<div class="pt-[19px] pb-[17px] ps-[23px] lg:py-[18px] lg:ps-[30px] shadow-[0px_1px_0px_0px_#f2f2f2]">
 						<div class="font-medium lg:text-[22px] lg:leading-[36px]">Pump and pipeline hydraulics</div>
 						<div class="mt-1 lg:mt-3 text-[12px] lg:text-sm font-medium lg:leading-[23px] text-[#A2A3A5]">NURT 40 PZM 0.37/W-4*</div>
@@ -410,7 +415,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="shadow-card rounded-[20px] lg:rounded-none bg-white mb-auto lg:pb-12 pb-6">
+				<div class="shadow-card rounded-[20px] lg:rounded-none bg-white mb-auto lg:pb-12 pb-6" id="card5" style="display: none">
 					<div class="pt-[18px] pb-[21px] ps-[30px] lg:py-5 lg:ps-5 shadow-[0px_1px_0px_0px_#f2f2f2]">
 						<div class="font-medium lg:text-[22px] lg:leading-[36px]">Pump power and operating point</div>
 					</div>
@@ -438,43 +443,43 @@
 					</div>
 				</div>
 			</section>
-			<section
-				id="footer-section"
-				class="pt-6 lg:ps-[30px] lg:pe-6 lg:pb-6 pb-[26px] ps-6 pe-[22px] flex flex-col lg:rounded-[20px] lg:flex-row justify-between gap-6 bg-white shadow-card mb-8 lg:mb-[52px]"
-			>
-				<div class="flex flex-col gap-[14px] lg:gap-1">
-					<div class="text-2xl leading-[140%] font-medium lg:leading-[40px] text-center lg:text-start">Download the PDF for Selected submersible pumps</div>
-					<div class="text-xs leading-[140%] text-[#A2A3A5] lg:font-medium lg:text-sm lg:leadine-[23px]">
-						If you get any problem or need any help regarding the selection then contact sales department.
+			<section id="card6" style="display: none" class="pt-6 lg:ps-[30px] lg:pe-6 lg:pb-6 pb-[26px] ps-6 pe-[22px] rounded-[20px] lg:rounded-0 bg-white shadow-card mb-8 lg:mb-[52px]">
+				<div class="flex flex-col lg:flex-row justify-between gap-6">
+					<div class="flex flex-col gap-[14px] lg:gap-1">
+						<div class="text-2xl leading-[140%] font-medium lg:leading-[40px] text-center lg:text-start">Download the PDF for Selected submersible pumps</div>
+						<div class="text-xs leading-[140%] text-[#A2A3A5] lg:font-medium lg:text-sm lg:leadine-[23px]">
+							If you get any problem or need any help regarding the selection then contact sales department.
+						</div>
 					</div>
-				</div>
-				<div class="flex gap-x-4 gap-y-5 flex-wrap justify-center my-auto">
-					<button class="gap-[5px] flex text-center bg-[#F5712F] rounded-[5px] text-white px-4 py-3">
-						<div class="w-6 h-6 flex"><i class="m-auto fa-regular fa-envelope"></i></div>
-						<div class="font-semibold leading-[26px]">Email</div>
-					</button>
-					<button class="gap-[5px] flex text-center bg-[#3B61E8] rounded-[5px] text-white ps-3 pe-2.5 py-3">
-						<div class="w-6 h-6 flex">
-							<img src="./images/phone.svg" alt="*" width="20" height="20" />
-						</div>
-						<div class="font-semibold leading-[26px]">Message</div>
-					</button>
-					<button class="gap-[5px] flex text-center bg-primary rounded-[5px] text-white ps-3 pe-4 py-3">
-						<div class="w-6 h-6 flex">
-							<img src="./images/callback.svg" alt="*" width="17.5" height="17.5" />
-						</div>
-						<div class="font-semibold leading-[26px]">Request a call back</div>
-					</button>
-					<button class="gap-[5px] flex text-center bg-[#4EB56A] rounded-[5px] text-white px-6 py-3">
-						<div class="w-6 h-6 flex">
-							<img src="./images/callback.svg" alt="*" width="18" height="18" />
-						</div>
-						<div class="font-semibold leading-[26px]">Download PDF</div>
-					</button>
+					<div class="flex gap-x-4 gap-y-5 flex-wrap justify-center my-auto">
+						<button class="gap-[5px] flex text-center bg-[#F5712F] rounded-[5px] text-white px-4 py-3">
+							<div class="w-6 h-6 flex"><i class="m-auto fa-regular fa-envelope"></i></div>
+							<div class="font-semibold leading-[26px]">Email</div>
+						</button>
+						<button class="gap-[5px] flex text-center bg-[#3B61E8] rounded-[5px] text-white ps-3 pe-2.5 py-3">
+							<div class="w-6 h-6 flex">
+								<img src="./images/phone.svg" alt="*" width="20" height="20" />
+							</div>
+							<div class="font-semibold leading-[26px]">Message</div>
+						</button>
+						<button class="gap-[5px] flex text-center bg-primary rounded-[5px] text-white ps-3 pe-4 py-3">
+							<div class="w-6 h-6 flex">
+								<img src="./images/callback.svg" alt="*" width="17.5" height="17.5" />
+							</div>
+							<div class="font-semibold leading-[26px]">Request a call back</div>
+						</button>
+						<button class="gap-[5px] flex text-center bg-[#4EB56A] rounded-[5px] text-white px-6 py-3">
+							<div class="w-6 h-6 flex">
+								<img src="./images/callback.svg" alt="*" width="18" height="18" />
+							</div>
+							<div class="font-semibold leading-[26px]">Download PDF</div>
+						</button>
+					</div>
 				</div>
 			</section>
 		</main>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+		<script src="./dummy.js"></script>
 		<script src="./index.js"></script>
 		<script src="./second.js"></script>
 	</body>

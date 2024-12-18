@@ -47,8 +47,9 @@ document.getElementById("flow_rate_user").addEventListener("input", function (e)
 			position: "right", // `left`, `center` or `right`
 			style: {
 				maxWidth: "300px",
-				background: "#2A6AB6",
+				background: "#F14343",
 				backgroundFilter: "blur(15px)",
+				borderRadius: "8px",
 			},
 			onClick: function () {}, // Callback after click
 		}).showToast();
