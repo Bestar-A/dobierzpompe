@@ -18,6 +18,7 @@
 			referrerpolicy="no-referrer"
 		/>
 		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<title>DobierzPompe.pl | MEPROZET | Brzeska Pump and Fittings Factory</title>
 	</head>
 	<body class="bg-[#FAFAFA] font-poppins flex flex-col text-dark">
@@ -227,10 +228,10 @@
 				<button class="py-3 my-4 w-[236px] text-center bg-primary rounded-[5px] font-semibold leading-[26px] text-white">Refresh</button>
 			</section>
 			<section class="grid gap-x-[15px] grid-cols-1 lg:grid-cols-3 gap-y-6">
-				<div class="shadow-card rounded-[20px] lg:rounded-none bg-white">
-					<div class="pt-[19px] ps-[23px] lg:py-[18px] lg:ps-[30px] shadow-[0px_1px_0px_0px_#f2f2f2]">
-						<div class="font-medium text-[22px] leading-[36px]">Result</div>
-						<div class="text-sm font-medium leading-[23px] text-[#A2A3A5]">Select any of the row below see the result</div>
+				<div class="shadow-card rounded-[20px] lg:rounded-none bg-white mb-auto">
+					<div class="pt-[19px] pb-[17px] ps-[23px] lg:py-[18px] lg:ps-[30px] shadow-[0px_1px_0px_0px_#f2f2f2]">
+						<div class="font-medium lg:text-[22px] lg:leading-[36px]">Result</div>
+						<div class="mt-1 lg:mt-3 text-[12px] lg:text-sm font-medium lg:leading-[23px] text-[#A2A3A5]">Select any of the row below see the result</div>
 					</div>
 					<div class="mt-[23px]" id="tableContainer">
 						<table id="tableResults" class="w-full mb-1">
@@ -242,7 +243,7 @@
 									<th class="text-start pb-[14px]">Model</th>
 								</tr>
 							</thead>
-							<tbody class="text-[#494949] leading-[24px]">
+							<tbody class="text-[#494949] text-[12px] leading-[18px] lg:text-base lg:leading-[24px]">
 								<tr class="hover:shadow-[0px_10px_30px_0px_#95959533] cursor-pointer duration-500 transition-all ease-linear">
 									<td class="flex py-3 ps-[14px]">
 										<div class="rounded-full bg-[#F14343] text-white px-3 py-1 leading-[26px]">1/08</div>
@@ -259,7 +260,7 @@
 									<td>0.75KW</td>
 									<td>NURT 40 PZM 0.75/R-2*</td>
 								</tr>
-								<tr class="hover:shadow-[0px_10px_30px_0px_#95959533] cursor-pointer duration-500 transition-all ease-linear">
+								<tr class="hover:shadow-[0px_10px_30px_0px_#95959533] cursor-pointer duration-500 transition-all ease-linear shadow-[0px_10px_30px_0px_#95959533]">
 									<td class="flex py-3 ps-[14px]">
 										<div class="rounded-full bg-[#F14343] text-white px-3 py-1 leading-[26px]">0.08</div>
 									</td>
@@ -343,8 +344,73 @@
 						</table>
 					</div>
 				</div>
-				<div>Pump and pipeline hydraulics</div>
-				<div>Pump power and operating point</div>
+				<div class="shadow-card rounded-[20px] lg:rounded-none bg-white mb-auto">
+					<div class="pt-[19px] pb-[17px] ps-[23px] lg:py-[18px] lg:ps-[30px] shadow-[0px_1px_0px_0px_#f2f2f2]">
+						<div class="font-medium lg:text-[22px] lg:leading-[36px]">Pump and pipeline hydraulics</div>
+						<div class="mt-1 lg:mt-3 text-[12px] lg:text-sm font-medium lg:leading-[23px] text-[#A2A3A5]">NURT 40 PZM 0.37/W-4*</div>
+					</div>
+					<div class="mt-[22px] lg:ps-1 lg:pe-6 relative">
+						<canvas id="hydraulics-chart" class="w-full h-[210px] lg:h-[295px] border"> </canvas>
+						<div class="absolute top-[50%] -translate-y-[50%] text-xl font-medium w-full text-center">Hydraulics Chart Goes Here</div>
+					</div>
+					<div class="mt-5 lg:mx-9 mx-7 flex flex-wrap gap-x-6 lg:gap-x-9 gap-y-3 lg:gap-y-0">
+						<div class="flex text-[10.5px] lg:text-sm leading-[22px] items-center gap-3 lg:gap-4">
+							<div class="w-[15px] lg:w-[20px] h-[4px] bg-primary rounded-full"></div>
+							Pompa
+						</div>
+						<div class="flex text-[10.5px] lg:text-sm leading-[22px] items-center gap-3 lg:gap-4">
+							<div class="w-[20px] h-[4px] bg-[#89B62A] rounded-full"></div>
+							Rurociag
+						</div>
+						<div class="flex text-[10.5px] lg:text-sm leading-[22px] items-center lg:gap-5 gap-3">
+							<div class="w-[7.5px] h-[7.5px] lg:w-[10px] lg:h-[10px] bg-[#89B62A] rounded-full"></div>
+							Punk wymagnany
+						</div>
+						<div class="flex text-[10.5px] lg:text-sm leading-[22px] items-center lg:gap-5 gap-3">
+							<div class="w-[7.5px] h-[7.5px] lg:w-[10px] lg:h-[10px] bg-[#FB4B14] rounded-full"></div>
+							Punk pracy
+						</div>
+						<div class="flex text-[10.5px] lg:text-sm leading-[22px] items-center lg:gap-5 gap-3">
+							<div class="w-[7.5px] h-[7.5px] lg:w-[10px] lg:h-[10px] bg-[#00507C] rounded-full"></div>
+							Punk nominalny
+						</div>
+					</div>
+					<div class="mt-6 mb-5 lg:mt-[49px] ms-[26px] me-[31px] lg:ms-[35px] lg:me-[39px]" id="pumpTable">
+						<table class="pmod8 w-full">
+							<thead>
+								<tr class="text-[10px] lg:text-[12px] text-[#92929D] leading-[15px] lg:leading-[20px]">
+									<th class="text-start">D</th>
+									<th class="text-start">REQUIRED</th>
+									<th class="text-start">ACTUAL</th>
+								</tr>
+							</thead>
+							<tbody class="lg:leading-[26px] leading-[17.5px] text-[#494949] lg:text-base text-[12px]">
+								<tr class="border-b">
+									<td scope="row" class="text-start pt-2.5 pb-2">Flow</td>
+									<td id="flow_rate_user_td" class="text-start pt-2.5 pb-2">6 m³/h</td>
+									<td id="flow_actual" class="text-start pt-2.5 pb-2">5.56 m³/h</td>
+								</tr>
+								<tr class="border-b">
+									<td scope="row" class="text-start pt-2.5 pb-2">Lifting Height</td>
+									<td id="lift_height_required" class="text-start pt-2.5 pb-2">5.09 m</td>
+									<td id="lift_height_actual" class="text-start pt-2.5 pb-2">5.08 m</td>
+								</tr>
+								<tr class="border-b">
+									<td scope="row" class="text-start pt-2.5 pb-2">Power</td>
+									<td class="text-start pt-2.5 pb-2">----</td>
+									<td id="power_actual" class="text-start pt-2.5 pb-2">0.31 kW</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="flex gap-5 lg:gap-3 flex-col lg:mt-8">
+						<div class="text-sm leading-[21px] lg:text-lg lg:leading-[30px] text-center">W - Forced flow, open impeller</div>
+						<div class="lg:ps-6 lg:pe-[30px] lg:h-[266px] flex ps-4 pb-4 pe-6 lg:pb-0">
+							<img src="./images/product.png" alt="#" width="333" height="118" class="w-full lg:w-[80%] h-auto m-auto" />
+						</div>
+					</div>
+				</div>
+				<div class="shadow-card rounded-[20px] lg:rounded-none bg-white mb-auto">Pump power and operating point</div>
 			</section>
 		</main>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
