@@ -38,7 +38,7 @@
 				<i class="fa-solid fa-bars"></i>
 			</div>
 		</header>
-		<main class="mt-[26px] flex flex-col gap-5 max-w-[1500px] px-7 lg:px-0 lg:mx-auto w-full">
+		<main class="mt-[26px] flex flex-col gap-6 lg:gap-5 max-w-[1500px] px-7 lg:px-0 lg:mx-auto w-full">
 			<section id="parameter-section" class="bg-white rounded-[20px] lg:rounded-[1px] shadow-card pt-5 lg:pt-4 pb-9 lg:ps-[33px] lg:pe-[25px] px-6">
 				<div class="font-medium text-3xl leading-normal text-center lg:text-start">Selection of submersible pumps</div>
 				<div class="font-medium text-lg leading-[30px] mt-[14px]">Enter parameters:</div>
@@ -193,7 +193,7 @@
 					</div>
 					<div class="pt-6 lg:pt-2 lg:pb-[14px] lg:ps-[30px]">
 						<div class="uppercase text-[#95979D] text-sm leading-[23px]">rotor type</div>
-						<div class="flex gap-12 lg:gap-[22px] flex-wrap mt-2.5">
+						<div class="flex gap-x-12 gap-y-7 lg:gap-[22px] flex-wrap mt-2.5">
 							<div class="form-check form-check-primary flex gap-2.5">
 								<input class="form-check-input cursor-pointer" type="checkbox" value="True" id="free" checked="" data-umami-event="Swobodny" />
 								<label class="form-check-label select-none cursor-pointer leading-[26px] text-dark" for="free">Free</label>
@@ -225,6 +225,126 @@
 					</div>
 				</div>
 				<button class="py-3 my-4 w-[236px] text-center bg-primary rounded-[5px] font-semibold leading-[26px] text-white">Refresh</button>
+			</section>
+			<section class="grid gap-x-[15px] grid-cols-1 lg:grid-cols-3 gap-y-6">
+				<div class="shadow-card rounded-[20px] lg:rounded-none bg-white">
+					<div class="pt-[19px] ps-[23px] lg:py-[18px] lg:ps-[30px] shadow-[0px_1px_0px_0px_#f2f2f2]">
+						<div class="font-medium text-[22px] leading-[36px]">Result</div>
+						<div class="text-sm font-medium leading-[23px] text-[#A2A3A5]">Select any of the row below see the result</div>
+					</div>
+					<div class="mt-[23px]" id="tableContainer">
+						<table id="tableResults" class="w-full mb-1">
+							<thead>
+								<tr class="uppercase text-[12px] font-medium text-[#92929D] leading-[20px]">
+									<th class="ps-6 text-start pb-[14px]">D</th>
+									<th class="text-start pb-[14px]">Rotor</th>
+									<th class="text-start pb-[14px]">Power</th>
+									<th class="text-start pb-[14px]">Model</th>
+								</tr>
+							</thead>
+							<tbody class="text-[#494949] leading-[24px]">
+								<tr class="hover:shadow-[0px_10px_30px_0px_#95959533] cursor-pointer duration-500 transition-all ease-linear">
+									<td class="flex py-3 ps-[14px]">
+										<div class="rounded-full bg-[#F14343] text-white px-3 py-1 leading-[26px]">1/08</div>
+									</td>
+									<td>Closed</td>
+									<td>0.55KW</td>
+									<td>32 PZM 0.55/ZT-2*</td>
+								</tr>
+								<tr class="hover:shadow-[0px_10px_30px_0px_#95959533] cursor-pointer duration-500 transition-all ease-linear">
+									<td class="flex py-3 ps-[14px]">
+										<div class="rounded-full bg-[#F14343] text-white px-3 py-1 leading-[26px]">1/06</div>
+									</td>
+									<td>Grinding</td>
+									<td>0.75KW</td>
+									<td>NURT 40 PZM 0.75/R-2*</td>
+								</tr>
+								<tr class="hover:shadow-[0px_10px_30px_0px_#95959533] cursor-pointer duration-500 transition-all ease-linear">
+									<td class="flex py-3 ps-[14px]">
+										<div class="rounded-full bg-[#F14343] text-white px-3 py-1 leading-[26px]">0.08</div>
+									</td>
+									<td>Forced</td>
+									<td>0.37KW</td>
+									<td>NURT 40 PZM 0.37/W-4*</td>
+								</tr>
+								<tr class="hover:shadow-[0px_10px_30px_0px_#95959533] cursor-pointer duration-500 transition-all ease-linear">
+									<td class="flex py-3 ps-[14px]">
+										<div class="rounded-full bg-[#3FB039] text-white px-3 py-1 leading-[26px]">1/08</div>
+									</td>
+									<td>Closed</td>
+									<td>0.55KW</td>
+									<td>32 PZM 0.55/ZT-2JV/W*</td>
+								</tr>
+								<tr class="hover:shadow-[0px_10px_30px_0px_#95959533] cursor-pointer duration-500 transition-all ease-linear">
+									<td class="flex py-3 ps-[14px]">
+										<div class="rounded-full bg-[#369A1E] text-white px-3 py-1 leading-[26px]">1/16</div>
+									</td>
+									<td>Grinding</td>
+									<td>1.1KW</td>
+									<td>NURT 40 PZM 1.1/R-2*</td>
+								</tr>
+								<tr class="hover:shadow-[0px_10px_30px_0px_#95959533] cursor-pointer duration-500 transition-all ease-linear">
+									<td class="flex py-3 ps-[14px]">
+										<div class="rounded-full bg-[#369A1E] text-white px-3 py-1 leading-[26px]">1.28</div>
+									</td>
+									<td>Grinding</td>
+									<td>1.5KW</td>
+									<td>NURT 40 PZM 1.5/R-2*</td>
+								</tr>
+								<tr class="hover:shadow-[0px_10px_30px_0px_#95959533] cursor-pointer duration-500 transition-all ease-linear">
+									<td class="flex py-3 ps-[14px]">
+										<div class="rounded-full bg-[#369A1E] text-white px-3 py-1 leading-[26px]">1.40</div>
+									</td>
+									<td>Grinding</td>
+									<td>1.9KW</td>
+									<td>NURT 40 PZM 1.9/R-2*</td>
+								</tr>
+								<tr class="hover:shadow-[0px_10px_30px_0px_#95959533] cursor-pointer duration-500 transition-all ease-linear">
+									<td class="flex py-3 ps-[14px]">
+										<div class="rounded-full bg-[#F3831B] text-white px-3 py-1 leading-[26px]">2/12</div>
+									</td>
+									<td>Free</td>
+									<td>0.75KW</td>
+									<td>NURT 50 PZM 0.75/S-2</td>
+								</tr>
+								<tr class="hover:shadow-[0px_10px_30px_0px_#95959533] cursor-pointer duration-500 transition-all ease-linear">
+									<td class="flex py-3 ps-[14px]">
+										<div class="rounded-full bg-[#F3831B] text-white px-3 py-1 leading-[26px]">2.22</div>
+									</td>
+									<td>Forced</td>
+									<td>0.75KW</td>
+									<td>NURT 40 PZM 0.75/W-4*</td>
+								</tr>
+								<tr class="hover:shadow-[0px_10px_30px_0px_#95959533] cursor-pointer duration-500 transition-all ease-linear">
+									<td class="flex py-3 ps-[14px]">
+										<div class="rounded-full bg-[#F3691B] text-white px-3 py-1 leading-[26px]">3.30</div>
+									</td>
+									<td>Free</td>
+									<td>1.1kW</td>
+									<td>NURT 50 PZM 1.1/S-2</td>
+								</tr>
+								<tr class="hover:shadow-[0px_10px_30px_0px_#95959533] cursor-pointer duration-500 transition-all ease-linear">
+									<td class="flex py-3 ps-[14px]">
+										<div class="rounded-full bg-[#F3691B] text-white px-3 py-1 leading-[26px]">3.91</div>
+									</td>
+									<td>Free</td>
+									<td>1.5kW</td>
+									<td>NURT 50 PZM 1.5/S-2</td>
+								</tr>
+								<tr class="hover:shadow-[0px_10px_30px_0px_#95959533] cursor-pointer duration-500 transition-all ease-linear">
+									<td class="flex py-3 ps-[14px]">
+										<div class="rounded-full bg-[#F3691B] text-white px-3 py-1 leading-[26px]">4.62</div>
+									</td>
+									<td>Free</td>
+									<td>1.9KW</td>
+									<td>NURT 50 PZM 1.9/S-2</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div>Pump and pipeline hydraulics</div>
+				<div>Pump power and operating point</div>
 			</section>
 		</main>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
