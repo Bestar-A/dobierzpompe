@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,9 +23,9 @@
 	</head>
 	<body class="bg-[#FAFAFA] font-poppins flex flex-col text-dark relative">
 		<div class="fixed top-0 left-0 w-full h-screen bg-[#ffffff3f] z-[20000]" style="display: none; backdrop-filter: blur(8px)" id="waiting">
-			<div class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
-				<div class="m-auto absolute border-4 border-[#196fd2] bg-transparent rounded-full animate-loading" style="animation-delay: 0.5s"></div>
-				<div class="m-auto absolute border-4 border-[#196fd2] rounded-full animate-loading"></div>
+			<div class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-20 h-20">
+				<div class="m-1 absolute border-4 border-[#196fd2] bg-transparent rounded-full opacity-0 animate-loading" style="animation-delay: 0.5s"></div>
+				<div class="m-1 absolute border-4 border-[#196fd2] rounded-full animate-loading"></div>
 			</div>
 		</div>
 		<header class="pt-7 pb-1.5 lg:pb-0 lg:pt-[1px] flex justify-between lg:bg-white lg:shadow-[0px_1px_0px_0px_#ADADAD1A]">
@@ -112,7 +112,7 @@
 								</div>
 								<div class="flex gap-[6px] items-center input-group">
 									<i class="fa-solid fa-circle-minus text-2xl text-[#d9d9d9] cursor-pointer hover:text-primary duration-200 minus-class"></i>
-									<input type="text" value="229" class="outline-none w-[30px] text-center value-input" id="flow_rate_user" />
+									<input type="text" value="6" class="outline-none w-[30px] text-center value-input" id="flow_rate_user" />
 									<i class="fa-solid fa-circle-plus text-2xl text-[#d9d9d9] cursor-pointer hover:text-primary duration-200 plus-class"></i>
 								</div>
 							</div>
@@ -123,7 +123,7 @@
 								<div class="rounded-[5px] text-[#595959] bg-[#dadada] px-5 pt-[9.57px] pb-[8.43px] leading-[26px]">m</div>
 								<div class="flex gap-[6px] items-center input-group">
 									<i class="fa-solid fa-circle-minus text-2xl text-[#d9d9d9] cursor-pointer hover:text-primary duration-200 minus-class"></i>
-									<input type="text" value="229" class="outline-none w-[30px] text-center value-input" id="pipe_length_user" />
+									<input type="text" value="5" class="outline-none w-[30px] text-center value-input" id="pipe_length_user" />
 									<i class="fa-solid fa-circle-plus text-2xl text-[#d9d9d9] cursor-pointer hover:text-primary duration-200 plus-class"></i>
 								</div>
 							</div>
@@ -134,7 +134,7 @@
 								<div class="rounded-[5px] text-[#595959] bg-[#dadada] px-5 pt-[9.57px] pb-[8.43px] leading-[26px]">m</div>
 								<div class="flex gap-[6px] items-center input-group">
 									<i class="fa-solid fa-circle-minus text-2xl text-[#d9d9d9] cursor-pointer hover:text-primary duration-200 minus-class"></i>
-									<input type="text" value="229" class="outline-none w-[30px] text-center value-input" id="lift_height_user" />
+									<input type="text" value="5" class="outline-none w-[30px] text-center value-input" id="lift_height_user" />
 									<i class="fa-solid fa-circle-plus text-2xl text-[#d9d9d9] cursor-pointer hover:text-primary duration-200 plus-class"></i>
 								</div>
 							</div>
@@ -149,7 +149,7 @@
 									>
 										<option class="bg-white text-black" value="32" id="d32">32 mm</option>
 										<option class="bg-white text-black" value="40" id="d40">40 mm</option>
-										<option class="bg-white text-black" value="50" id="d50">50 mm</option>
+										<option class="bg-white text-black" value="50" id="d50" selected>50 mm</option>
 										<option class="bg-white text-black" value="63" id="d63">63 mm</option>
 										<option class="bg-white text-black" value="65" id="d65">65 mm</option>
 										<option class="bg-white text-black" value="70" id="d70">70 mm</option>
@@ -163,7 +163,7 @@
 										<option class="bg-white text-black" value="160" id="d160">160 mm</option>
 										<option class="bg-white text-black" value="180" id="d180">180 mm</option>
 										<option class="bg-white text-black" value="200" id="d200">200 mm</option>
-										<option class="bg-white text-black" value="225" id="d225" selected="">225 mm</option>
+										<option class="bg-white text-black" value="225" id="d225">225 mm</option>
 										<option class="bg-white text-black" value="250" id="d250">250 mm</option>
 										<option class="bg-white text-black" value="280" id="d280">280 mm</option>
 										<option class="bg-white text-black" value="315" id="d315">315 mm</option>
@@ -229,7 +229,7 @@
 							</div>
 						</div>
 					</div>
-					<button class="py-3 my-4 w-[236px] text-center bg-primary rounded-[5px] font-semibold leading-[26px] text-white">Refresh</button>
+					<button class="py-3 my-4 w-[236px] text-center bg-primary rounded-[5px] font-semibold leading-[26px] text-white mx-auto">Refresh</button>
 				</div>
 			</section>
 			<section class="grid gap-x-[15px] grid-cols-1 lg:grid-cols-3 gap-y-6">
@@ -352,7 +352,7 @@
 				<div class="shadow-card rounded-[20px] lg:rounded-none bg-white mb-auto" id="card4" style="display: none">
 					<div class="pt-[19px] pb-[17px] ps-[23px] lg:py-[18px] lg:ps-[30px] shadow-[0px_1px_0px_0px_#f2f2f2]">
 						<div class="font-medium lg:text-[22px] lg:leading-[36px]">Pump and pipeline hydraulics</div>
-						<div class="mt-1 lg:mt-3 text-[12px] lg:text-sm font-medium lg:leading-[23px] text-[#A2A3A5]">NURT 40 PZM 0.37/W-4*</div>
+						<div class="mt-1 lg:mt-3 text-[12px] lg:text-sm font-medium lg:leading-[23px] text-[#A2A3A5]" id="pump_name">NURT 40 PZM 0.37/W-4*</div>
 					</div>
 					<div class="mt-[22px] lg:ps-1 lg:pe-6 relative">
 						<canvas id="hydraulics-chart" class="w-full h-[210px] lg:h-[295px] border"> </canvas>
@@ -409,7 +409,7 @@
 						</table>
 					</div>
 					<div class="flex gap-5 lg:gap-3 flex-col lg:mt-8">
-						<div class="text-sm leading-[21px] lg:text-lg lg:leading-[30px] text-center">W - Forced flow, open impeller</div>
+						<div class="text-sm leading-[21px] lg:text-lg lg:leading-[30px] text-center" id="rotorShortDescription">W - Forced flow, open impeller</div>
 						<div class="lg:ps-6 lg:pe-[30px] lg:h-[266px] flex ps-4 pb-4 pe-6 lg:pb-0">
 							<img src="./images/product.png" alt="#" width="333" height="118" class="w-full lg:w-[80%] h-auto m-auto" />
 						</div>
@@ -443,7 +443,7 @@
 					</div>
 				</div>
 			</section>
-			<section id="card6" style="display: none" class="pt-6 lg:ps-[30px] lg:pe-6 lg:pb-6 pb-[26px] ps-6 pe-[22px] rounded-[20px] lg:rounded-0 bg-white shadow-card mb-8 lg:mb-[52px]">
+			<section id="card6" style="display: none" class="pt-6 lg:ps-[30px] lg:pe-6 lg:pb-6 pb-[26px] ps-6 pe-[22px] rounded-[20px] lg:rounded-none bg-white shadow-card mb-8 lg:mb-[52px]">
 				<div class="flex flex-col lg:flex-row justify-between gap-6">
 					<div class="flex flex-col gap-[14px] lg:gap-1">
 						<div class="text-2xl leading-[140%] font-medium lg:leading-[40px] text-center lg:text-start">Download the PDF for Selected submersible pumps</div>
@@ -452,7 +452,7 @@
 						</div>
 					</div>
 					<div class="flex gap-x-4 gap-y-5 flex-wrap justify-center my-auto">
-						<button class="gap-[5px] flex text-center bg-[#F5712F] rounded-[5px] text-white px-4 py-3">
+						<button class="gap-[5px] flex text-center bg-[#F5712F] rounded-[5px] text-white px-4 py-3" id="mail">
 							<div class="w-6 h-6 flex"><i class="m-auto fa-regular fa-envelope"></i></div>
 							<div class="font-semibold leading-[26px]">Email</div>
 						</button>

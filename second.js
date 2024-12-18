@@ -1,3 +1,5 @@
+let selectedRowId = null;
+
 var inputField = document.getElementById("flow_rate_user");
 var dropdownItems = document.querySelectorAll(".dropdown-menu .dropdown-item");
 var measurementUnitDisplay = document.getElementById("measurementUnit");
@@ -259,31 +261,20 @@ function waitForDummyResponse() {
 }
 
 async function submitForm() {
-	console.log("logging csrf");
-	console.log(getCookie("csrftoken"));
-	console.log("end of logging csrf");
 	const waiting = document.getElementById("waiting");
 	waiting.style.display = "";
 	waiting.style.zIndex = "20000";
 	const measurementUnitDisplay = document.getElementById("measurementUnit");
-	console.log(measurementUnitDisplay);
 	const measurementUnit = measurementUnitDisplay.getAttribute("value");
-	console.log(measurementUnit);
 
 	const currentUnitFullName = Object.keys(unitAbbreviationsNotations).find((key) => unitAbbreviationsNotations[key] === measurementUnit);
-	console.log(currentUnitFullName);
 	var flow_rate_user = parseFloat(document.getElementById("flow_rate_user").value.replace(/,/g, "."));
-	console.log(flow_rate_user);
 	flow_rate_user = toBaseUnit(flow_rate_user, currentUnitFullName);
-	console.log(flow_rate_user);
 	let lift_height_user_value = parseFloat(document.getElementById("lift_height_user").value.replace(/,/g, "."));
 	let lift_height_user = isNaN(lift_height_user_value) ? 0 : lift_height_user_value.toFixed(0);
 
 	let pipe_length_value = parseFloat(document.getElementById("pipe_length_user").value.replace(/,/g, "."));
 	let pipe_length_user = isNaN(pipe_length_value) ? 0 : pipe_length_value.toFixed(0);
-
-	console.log(flow_rate_user);
-	console.log(currentUnitFullName);
 
 	const diameter = document.getElementById("pipe_diameter_user").value;
 	const checkboxes = {
@@ -302,10 +293,8 @@ async function submitForm() {
 	}
 
 	let hydraulicTypesString = "(" + checkedKeys.join(",") + ")";
-	console.log(hydraulicTypesString);
 	const radioValue = document.querySelector('input[name="radioOption"]:checked') ? document.querySelector('input[name="radioOption"]:checked').value : null;
 
-	console.log(flow_rate_user);
 	if (parseFloat(document.getElementById("flow_rate_user").value) < 0.0009 || lift_height_user < 1 || pipe_length_user < 1) {
 		alert("Wartości Q, H i L muszą być większe od 1");
 		waiting.style.display = "none";
@@ -341,8 +330,6 @@ async function submitForm() {
 
 	storedResponseData = response;
 
-	console.log("Response:", storedResponseData);
-
 	waiting.style.display = "none";
 
 	renderTable(storedResponseData);
@@ -369,55 +356,91 @@ async function submitForm() {
 		innerHTML("power_actual", "");
 		innerHTML("rotorShortDescription", "");
 		waiting.style.display = "none";
-	} else {
-		innerHTML("wyniki", "Wyniki");
-		innerHTML("hydraulikah4", "Hydraulika pompy oraz rurociągu");
 	}
 }
 
 function renderTable(data) {
 	data.sort((a, b) => a.goodness_factor - b.goodness_factor);
 
-	console.log("Render Table", data);
+	const tableContainer = document.getElementById("tableContainer");
+	tableContainer.innerHTML = "";
 
-	let tableHtml = '<table class="table table-hover mb-0 p-0 pmod5" id="tableResults">';
-	tableHtml += "<tr><th>D</th><th>Wirnik</th><th>Moc</th><th>Model</th></tr>";
+	const table = document.createElement("table");
+	table.id = "tableResults";
+	table.className = "w-full mb-1";
+
+	const thead = document.createElement("thead");
+	const headerRow = document.createElement("tr");
+	headerRow.className = "uppercase text-[12px] font-medium text-[#92929D] leading-[20px]";
+
+	const headers = ["D", "Rotor", "Power", "Model"];
+	headers.forEach((headerText, id) => {
+		const th = document.createElement("th");
+		th.className = `text-start pb-[14px] ${id === 0 && " ps-6"}`;
+		th.textContent = headerText;
+		headerRow.appendChild(th);
+	});
+
+	thead.appendChild(headerRow);
+	table.appendChild(thead);
+
+	const tbody = document.createElement("tbody");
+	tbody.className = "text-[#494949] text-[12px] leading-[18px] lg:text-base lg:leading-[24px]";
 
 	for (const item of data) {
 		const roundedRelativeDiff = item.goodness_factor.toFixed(2);
 
 		const rowId = `row_${item.pump_id}`;
-		let rowClass = "";
+		let rowClass = "hover:shadow-[0px_10px_30px_0px_#95959533] cursor-pointer duration-500 transition-all ease-linear";
+		let badgeClass = "rounded-full text-white px-3 py-1 leading-[26px]";
+
 		if (roundedRelativeDiff < 0.4) {
-			rowClass = "table-success hover-text";
+			badgeClass += " bg-[#F14343]";
 		} else if (roundedRelativeDiff < 0.8) {
-			rowClass = "table-info hover-text";
+			badgeClass += " bg-[#3FB039]";
 		} else if (roundedRelativeDiff < 1) {
-			rowClass = "table-warning hover-text";
+			badgeClass += " bg-[#F3831B]";
 		} else {
-			rowClass = "table-danger hover-text";
+			badgeClass += " bg-[#F3691B]";
 		}
 
-		tableHtml += `<tr id="${rowId}" class="${rowClass}" onclick="updateData('${item.hydraulic_plot}','${item.power_plot}','${item.hydraulic_name}', '${item.pump_id}', '${rowId}')">`;
-		tableHtml += `<td>${roundedRelativeDiff}</td><td>${item.hydraulic_name}</td><td>${item.power_nominal}kW</td><td>${item.pump_name}</td>`;
-		tableHtml += "</tr>";
+		const row = document.createElement("tr");
+		row.id = rowId;
+		row.className = rowClass;
+		row.addEventListener("click", () => {
+			updateData(item.hydraulic_plot, item.power_plot, item.hydraulic_name, item.pump_id, item.pump_id);
+		});
+
+		const firstCell = document.createElement("td");
+		firstCell.className = "flex py-3 ps-[14px]";
+		const badgeDiv = document.createElement("div");
+		badgeDiv.className = badgeClass;
+		badgeDiv.textContent = roundedRelativeDiff;
+		firstCell.appendChild(badgeDiv);
+		row.appendChild(firstCell);
+
+		const cells = [item.hydraulic_name, `${item.power_nominal}kW`, item.pump_name];
+
+		cells.forEach((cellText) => {
+			const cell = document.createElement("td");
+			cell.textContent = cellText;
+			row.appendChild(cell);
+		});
+
+		tbody.appendChild(row);
 	}
 
-	tableHtml += "</table>";
+	table.appendChild(tbody);
 
-	document.getElementById("tableContainer").innerHTML = tableHtml;
-	tableHtml += "</table>";
+	tableContainer.appendChild(table);
 
-	document.getElementById("tableContainer").innerHTML = tableHtml;
-
-	var table = document.getElementById("tableContainer").getElementsByTagName("table")[0];
 	var secondRow = table.rows[1];
-	// if (secondRow) {
-	// 	secondRow.click();
-
-	// 	document.getElementById("tableContainer").scrollIntoView();
-	// }
-	document.getElementById("tableContainer").scrollIntoView();
+	if (secondRow) {
+		secondRow.click();
+	}
+	setTimeout(() => {
+		tableContainer.scrollIntoView({ behavior: "smooth" });
+	}, 100);
 }
 
 function showCards() {
@@ -427,6 +450,126 @@ function showCards() {
 	document.getElementById("card6").style.display = "block";
 	document.getElementById("card7").style.display = "block";
 	document.getElementById("tableContainer").scrollIntoView();
+}
+
+function replacePolishChars(input) {
+	const polishChars = {
+		ą: "a",
+		ć: "c",
+		ę: "e",
+		ł: "l",
+		ń: "n",
+		ó: "o",
+		ś: "s",
+		ź: "z",
+		ż: "z",
+		Ą: "A",
+		Ć: "C",
+		Ę: "E",
+		Ł: "L",
+		Ń: "N",
+		Ó: "O",
+		Ś: "S",
+		Ź: "Z",
+		Ż: "Z",
+	};
+	return input.replace(/[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/g, (match) => polishChars[match]);
+}
+
+function applyPumpTypeDescription(hydraulic_name) {
+	const descriptions = {
+		Swobodny: "S - Swobodny przepływ, wirnik otwarty",
+		Wymuszony: "W - Wymuszony przepływ, wirnik otwarty",
+		Zamknięty: "Z - Zamknięty przepływ, wirnik wielołopatkowy",
+		Kanałowy: "K - Kanałowy wirnik jednołopatkowy",
+		Rozdrabniający: "R - Pompa z rozdrabniaczem",
+	};
+	return descriptions[hydraulic_name];
+}
+
+function innerHTML(id, value) {
+	document.getElementById(id).innerHTML = value;
+}
+
+function updateMailTo() {
+	var mail = document.getElementById("mail");
+	mail.addEventListener("click", () => {
+		window.location.href =
+			"mailto:sprzedaz@meprozet.com.pl?subject=Zapytanie%20o%20pompę%20" +
+			encodeURIComponent(document.getElementById("pump_name").innerHTML) +
+			"%20o%20parametrach%20Q=" +
+			encodeURIComponent(document.getElementById("flow_rate_user_td").innerHTML) +
+			",%20H=" +
+			encodeURIComponent(document.getElementById("lift_height_user").value) +
+			"m,%20L=" +
+			encodeURIComponent(document.getElementById("pipe_length_user").value) +
+			"m,%20D=" +
+			encodeURIComponent(document.getElementById("pipe_diameter_user").value) +
+			"mm" +
+			"&body=Dzień%20dobry,%0D%0A%0D%0AKorzystając%20z%20aplikacji%20dobierzpompe.pl,%20moją%20uwagę%20zwróciła%20pompa%20" +
+			encodeURIComponent(document.getElementById("pump_name").innerHTML) +
+			".%0D%0A%0D%0AInteresuje%20mnie%20...%20%0D%0A%0D%0APozdrawiam,";
+	});
+}
+
+function updateData(plotHydraulic, plotPower, hydraulic_name, pump_id, rowId) {
+	// const plotHydraulicImg = document.getElementById("plotHydraulic");
+	// const plotPowerImg = document.getElementById("plotPower");
+	// const rotorImage = document.getElementById("rotorImage");
+	const rotorShortDescription = document.getElementById("rotorShortDescription");
+	// const placeholderUrl = "/images/placeholder.gif";
+
+	rotorShortDescription.innerHTML = applyPumpTypeDescription(hydraulic_name);
+
+	// plotHydraulicImg.src = placeholderUrl;
+	// plotPowerImg.src = placeholderUrl;
+	// rotorImage.src = "/images/" + replacePolishChars(hydraulic_name) + ".png";
+
+	// function loadImage(imageElement, imageUrl) {
+	// 	const image = new Image();
+	// 	image.onload = function () {
+	// 		imageElement.src = imageUrl;
+	// 	};
+	// 	image.onerror = function () {
+	// 		setTimeout(function () {
+	// 			imageElement.src = imageUrl;
+	// 		}, 1000);
+	// 	};
+	// 	image.src = imageUrl;
+	// }
+
+	// loadImage(plotHydraulicImg, "/img/" + plotHydraulic);
+	// loadImage(plotPowerImg, "/img/" + plotPower);
+
+	const dataIndex = storedResponseData.findIndex((item) => item.pump_id == pump_id);
+
+	if (dataIndex !== -1) {
+		const pumpData = storedResponseData[dataIndex];
+		const table = document.getElementById("pumpTable");
+		table.setAttribute("pump_id", pump_id);
+		innerHTML("flow_rate_user_td", `${pumpData.flow_rate_user} m³/h`);
+		innerHTML("flow_actual", `${pumpData.flow_actual.toFixed(2)} m³/h`);
+		innerHTML("lift_height_required", `${pumpData.lift_height_required.toFixed(2)} m`);
+		innerHTML("lift_height_actual", `${pumpData.lift_height_actual.toFixed(2)} m`);
+		innerHTML("power_actual", `${pumpData.power_actual.toFixed(2)} kW`);
+		innerHTML("pump_name", `${pumpData.pump_name}`);
+		// console.log(selectedRowId);
+		// if (selectedRowId !== null && selectedRowId !== rowId) {
+		// 	const prevSelectedRow = document.getElementById(selectedRowId);
+		// 	if (prevSelectedRow) {
+		// 		prevSelectedRow.classList.remove("fw-bold", "text-primary");
+		// 	}
+		// }
+		updateMailTo();
+
+		const selectedRow = document.getElementById(rowId);
+		if (selectedRow) {
+			selectedRow.classList.add("fw-bold", "text-primary");
+			selectedRowId = rowId;
+		}
+	} else {
+		console.error(`Data for pump_id ${pump_id} not found in storedResponseData.`);
+	}
 }
 
 updateFlowVisualization();
