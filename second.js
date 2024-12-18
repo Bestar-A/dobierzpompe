@@ -337,8 +337,6 @@ async function submitForm() {
 
 	***************************************************************************************************/
 
-	console.log(storedResponseData);
-
 	waiting.style.display = "none";
 
 	renderTable(storedResponseData);
