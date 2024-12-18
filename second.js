@@ -409,6 +409,8 @@ function renderTable(data) {
 		row.id = rowId;
 		row.className = rowClass;
 		row.addEventListener("click", () => {
+			clearActiveRow();
+			row.classList.add("shadow-[0px_10px_30px_0px_#95959533]");
 			updateData(item.hydraulic_plot, item.power_plot, item.hydraulic_name, item.pump_id, item.pump_id);
 		});
 
@@ -442,6 +444,13 @@ function renderTable(data) {
 	setTimeout(() => {
 		tableContainer.scrollIntoView({ behavior: "smooth" });
 	}, 100);
+}
+
+function clearActiveRow() {
+	const resultTableRows = document.querySelectorAll("#tableResults tbody tr");
+	resultTableRows.forEach((row) => {
+		row.classList.remove("shadow-[0px_10px_30px_0px_#95959533]");
+	});
 }
 
 function showCards() {
