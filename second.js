@@ -1,3 +1,5 @@
+const serverDomain = "https://dobierzpompe-fserver.onrender.com/get_data/";
+
 let selectedRowId = null;
 
 var inputField = document.getElementById("flow_rate_user");
@@ -315,21 +317,27 @@ async function submitForm() {
 		radioValue,
 	};
 
-	/********************** Use Mockup Data in Development Phase for CORS error **********************
-		const response = await fetch("/general_post/", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				"X-CSRFToken": "1nvps4AdfEiKOcHFJPCiRUhrfLPHLqJL",
-			},
-			body: JSON.stringify(data),
-		});
-		storedResponseData = await response.json();
-	***************************************************************************************************/
+	/********************** Use Mockup Data in Development Phase for CORS error **********************/
+	const cookieData = getCookie("csrftoken");
+	const response = await fetch(serverDomain, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			"X-CSRFToken": cookieData,
+		},
+		body: JSON.stringify(data),
+	});
+	storedResponseData = await response.json();
+	/***************************************************************************************************/
 
+	/********************** Use Mockup Data in Development Phase for CORS error **********************
 	await waitForDummyResponse();
 
 	storedResponseData = response;
+
+	***************************************************************************************************/
+
+	console.log(storedResponseData);
 
 	waiting.style.display = "none";
 
