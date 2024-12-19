@@ -422,8 +422,8 @@
 						<div class="font-medium lg:text-[22px] lg:leading-[36px]">Pump power and operating point</div>
 					</div>
 					<div class="mt-8 lg:mt-[92px] ps-1 pe-[14px] lg:ps-0.5 lg:pe-[18px] relative">
-						<canvas class="h-[260px] lg:h-[330px] w-full border" id="power-chart"></canvas>
-						<div class="absolute text-xl font-medium top-[50%] w-full text-center -translate-y-[50%]">Power Chart Goes Here</div>
+						<canvas class="h-[260px] lg:h-[330px] w-full" id="power-chart"></canvas>
+						<!-- <div class="absolute text-xl font-medium top-[50%] w-full text-center -translate-y-[50%]">Power Chart Goes Here</div> -->
 					</div>
 					<div class="mt-[22px] flex flex-wrap gap-x-8 px-10 lg:px-14 gap-y-2 lg:gap-y-0">
 						<div class="flex text-[10.5px] lg:text-sm leading-[22px] items-center gap-2.5 lg:gap-5">
@@ -482,8 +482,14 @@
 		</main>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+		<script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/jspdf-html2canvas@latest/dist/jspdf-html2canvas.min.js"></script>
+
 		<script src="./index.js"></script>
 		<script src="./chart.js"></script>
 		<script src="./second.js"></script>
+		<script src="./pdf.js"></script>
 	</body>
 </html>

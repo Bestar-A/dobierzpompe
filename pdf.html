@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Print Styled HTML to PDF</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+			}
+			#content {
+				padding: 20px;
+				background-color: #f4f4f4;
+				border: 1px solid #ccc;
+				border-radius: 8px;
+				margin: 0 auto;
+				max-width: 600px;
+			}
+			h1 {
+				color: #333;
+			}
+			p {
+				font-size: 16px;
+			}
+			button {
+				margin-top: 20px;
+				padding: 10px 15px;
+				background-color: #28a745;
+				color: white;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+			button:hover {
+				background-color: #218838;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="page" style="width: 595.28px; color: black; background: white; display: flex">
+			<h3 style="color: red; font-size: 36px; text-decoration: underline">PDF for Test</h3>
+			<p>Here is some content for testing!!</p>
+		</div>
+
+		<button id="btn">Generate</button>
+		<script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/jspdf-html2canvas@latest/dist/jspdf-html2canvas.min.js"></script>
+		<script>
+			let btn = document.getElementById("btn");
+			let page = document.getElementById("page");
+
+			btn.addEventListener("click", function () {
+				html2PDF(page, {
+					jsPDF: {
+						format: "a4",
+					},
+					imageType: "image/jpeg",
+					output: "./pdf/generate.pdf",
+				});
+			});
+		</script>
+	</body>
+</html>
