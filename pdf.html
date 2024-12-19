@@ -40,27 +40,56 @@
 		</style>
 	</head>
 	<body>
-		<div id="page" style="width: 595.28px; color: black; background: white; display: flex">
+		<div id="page" style="width: 595.28px; color: black; background: lightcyan; display: none">
 			<h3 style="color: red; font-size: 36px; text-decoration: underline">PDF for Test</h3>
 			<p>Here is some content for testing!!</p>
+			<canvas id="myChart"></canvas>
 		</div>
 
 		<button id="btn">Generate</button>
 		<script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/jspdf-html2canvas@latest/dist/jspdf-html2canvas.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+		<script>
+			const ctx = document.getElementById("myChart");
+
+			new Chart(ctx, {
+				type: "bar",
+				data: {
+					labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+					datasets: [
+						{
+							label: "# of Votes",
+							data: [12, 19, 3, 5, 2, 3],
+							borderWidth: 1,
+						},
+					],
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true,
+						},
+					},
+				},
+			});
+		</script>
 		<script>
 			let btn = document.getElementById("btn");
 			let page = document.getElementById("page");
 
 			btn.addEventListener("click", function () {
+				page.style.display = "block";
 				html2PDF(page, {
 					jsPDF: {
-						format: "a4",
+						format: "b5",
 					},
 					imageType: "image/jpeg",
 					output: "./pdf/generate.pdf",
 				});
+				page.style.display = "none";
 			});
 		</script>
 	</body>

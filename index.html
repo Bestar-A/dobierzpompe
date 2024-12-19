@@ -474,12 +474,213 @@
 							<div class="w-6 h-6 flex">
 								<img src="./images/callback.svg" alt="*" width="18" height="18" />
 							</div>
-							<div class="font-semibold leading-[26px]">Download PDF</div>
+							<div class="font-semibold leading-[26px]" id="download-btn">Download PDF</div>
 						</button>
 					</div>
 				</div>
 			</section>
 		</main>
+		<div class="border mx-auto bg-white" id="pdf-page" style="width: 790px; display: block;">
+			<div class="px-[90px] flex justify-between">
+				<img src="./images/logo.png" alt="logo" width="160" height="34" class="w-[131.76px] h-[28px] my-auto" />
+				<div class="my-[22px]">
+					<div class="flex gap-[38px]">
+						<div class="flex gap-2.5 w-full items-center">
+							<i class="fa-solid fa-phone fa-2xs text-white m-auto p-1 bg-primary pb-4"></i>
+							<div class="text-[9px] text-[#686262] text-nowrap">Tel: +1 0214 2547 2548</div>
+						</div>
+						<div class="flex gap-2.5 w-full items-center">
+							<i class="fa-solid fa-globe fa-2xs text-white p-1 pb-4 bg-primary"></i>
+							<div class="text-[9px] text-[#686262]">www.example.com</div>
+						</div>
+					</div>
+					<div class="flex gap-2.5 w-full items-center mt-[5px]">
+						<i class="fa-solid fa-envelope fa-2xs text-white p-1 pb-4 bg-primary"></i>
+						<div class="text-[9px] text-[#686262]">email: example@gmai.com</div>
+					</div>
+				</div>
+			</div>
+			<div class="border-b border-primary">
+				<img src="./images/deco.svg" alt="_______" width="260" height="5" />
+			</div>
+			<div class="pt-6 pb-9 text-center text-primary text-[26px] font-medium" id="pdf-model-name">N-430</div>
+			<div class="flex flex-col px-[90px]">
+				<div class="text-lg font-medium text-dark mb-3 text-start">Wykres charakterystyki hydraulicznej</div>
+				<div class="flex gap-7" id="hydraulic-chart-wrapper">
+					<div class="w-[445px] h-[264px]">
+						<canvas class="border w-[445px] h-[264px]" id="hydraulic-chart-canvas"></canvas>
+					</div>
+					<div class="pb-9 my-auto flex flex-col gap-[14px]">
+						<div class="gap-3 flex">
+							<div class="w-[18.82px] h-[3.76px] bg-primary rounded-full mt-3"></div>
+							<div class="text-xs leading-none">Pompa</div>
+						</div>
+						<div class="flex gap-3">
+							<div class="w-[18.82px] h-[3.76px] bg-[#89B62A] rounded-full mt-3"></div>
+							<div class="text-xs leading-none">Rurociag</div>
+						</div>
+						<div class="flex gap-3">
+							<div class="w-[18.82px] flex justify-center rounded-full">
+								<div class="w-[9.41px] h-[9.41px] bg-[#fb4b14] rounded-full mt-2"></div>
+							</div>
+							<div class="text-xs leading-none">Punk pracy</div>
+						</div>
+						<div class="flex gap-3 text-nowrap">
+							<div class="w-[18.82px] flex justify-center rounded-full">
+								<div class="w-[9.41px] h-[9.41px] bg-[#A2D729] rounded-full mt-2"></div>
+							</div>
+							<div class="text-xs leading-none">Punk wymagnany</div>
+						</div>
+						<div class="flex gap-3">
+							<div class="w-[18.82px] flex justify-center rounded-full">
+								<div class="w-[9.41px] h-[9.41px] bg-[#00507C] rounded-full mt-2"></div>
+							</div>
+							<div class="text-xs leading-none">Punk nominalny</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="flex flex-col px-[90px] mt-[30px]">
+				<div class="text-lg font-medium text-dark mb-3">Wykres charakterystyki mocy</div>
+				<div class="flex gap-7">
+					<div class="w-[445px] h-[263.5px]">
+						<canvas class="w-[445px] h-[263.5px] border"></canvas>
+					</div>
+					<div class="flex flex-col gap-[14px] justify-center">
+						<div class="flex gap-3">
+							<div class="w-[18.82px] h-[3.76px] bg-primary rounded-full mt-3"></div>
+							<div class="text-xs leading-none">Pompa</div>
+						</div>
+						<div class="flex gap-3">
+							<div class="w-[18.82px] h-[3.76px] bg-[#fb4b14] flex justify-center rounded-full relative mt-3">
+								<div class="w-[9.41px] h-[9.41px] bg-[#fb4b14] rounded-full absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+							</div>
+							<div class="text-xs leading-none">Punk pracy</div>
+						</div>
+						<div class="flex gap-3">
+							<div class="w-[18.82px] h-[3.76px] bg-primary flex justify-center rounded-full relative mt-3">
+								<div class="w-[9.41px] h-[9.41px] bg-[#00507C] rounded-full absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+							</div>
+							<div class="text-xs leading-none">Punk nominalny</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mt-[34px] px-[90px] flex justify-between items-start">
+				<div class="ps-[15px] pe-[18px] py-[15px] bg-[#FAFCFF]">
+					<table class="w-full">
+						<thead>
+							<tr class="text-[10px] font-medium text-[#777777]">
+								<th class="pb-3 text-start">Parameter</th>
+								<th class="pb-3">Wymagany</th>
+								<th class="pb-3 ps-7">Rzeczywisty</th>
+							</tr>
+						</thead>
+						<tbody class="text-[12px] leading-[140%] text-dark">
+							<tr class="border-b border-[#e7e7e7]">
+								<td class="py-2.5">Wydajność/Przepływ Q [m3/h]</td>
+								<td class="py-2.5 text-center font-medium">6.0</td>
+								<td class="py-2.5 text-center font-medium ps-7">5.557</td>
+							</tr>
+							<tr class="border-b border-[#e7e7e7]">
+								<td class="py-2.5">Wysokość podnoszenia [m]</td>
+								<td class="py-2.5 text-center font-medium">5.09</td>
+								<td class="py-2.5 text-center font-medium ps-7">5.078</td>
+							</tr>
+								<td class="py-2.5">Moc nominalna [kW]</td>
+								<td class="py-2.5 text-center font-medium">.......</td>
+								<td class="py-2.5 text-center font-medium ps-7">0.313</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="py-[15px] px-[22px] bg-[#FAFCFF] flex flex-col gap-[9px]">
+					<div class="flex justify-between gap-[25px]">
+						<div class="text-[#92929D] text-[7px] font-medium">Średnica wylotu:</div>
+						<div class="text-dark text-[7px] font-medium">40 mm</div>
+					</div>
+					<div class="flex justify-between gap-[25px]">
+						<div class="text-[#92929D] text-[7px] font-medium">Masa kg:</div>
+						<div class="text-dark text-[7px] font-medium">21.000 kg</div>
+					</div>
+					<div class="flex justify-between gap-[25px]">
+						<div class="text-[#92929D] text-[7px] font-medium">Prędkość obrotowa wirnika:</div>
+						<div class="text-dark text-[7px] font-medium">1380 obr/min</div>
+					</div>
+					<div class="flex justify-between gap-[25px]">
+						<div class="text-[#92929D] text-[7px] font-medium">Czujnik wilgotnościowy:</div>
+						<div class="text-dark text-[7px] font-medium">Nie</div>
+					</div>
+					<div class="flex justify-between gap-[25px]">
+						<div class="text-[#92929D] text-[7px] font-medium">Napięcie znamionowe: </div>
+						<div class="text-dark text-[7px] font-medium">230/400V</div>
+					</div>
+					<div class="flex justify-between gap-[25px]">
+						<div class="text-[#92929D] text-[7px] font-medium">Moc pobierana z sieci: </div>
+						<div class="text-dark text-[7px] font-medium">530 W</div>
+					</div>
+					<div class="flex justify-between gap-[25px]">
+						<div class="text-[#92929D] text-[7px] font-medium">Moc na wale:</div>
+						<div class="text-dark text-[7px] font-medium">370 W</div>
+					</div>
+					<div class="flex justify-between gap-[25px]">
+						<div class="text-[#92929D] text-[7px] font-medium">Prąd znamionowy:</div>
+						<div class="text-dark text-[7px] font-medium">1.1A</div>
+					</div>
+					<div class="flex justify-between gap-[25px]">
+						<div class="text-[#92929D] text-[7px] font-medium">Krotność prądu rozruchowego:</div>
+						<div class="text-dark text-[7px] font-medium">3.5</div>
+					</div>
+					<div class="flex justify-between gap-[25px]">
+						<div class="text-[#92929D] text-[7px] font-medium">Przelot swobodny:</div>
+						<div class="text-dark text-[7px] font-medium">15</div>
+					</div>
+				</div>
+			</div>
+			<div class="mt-6 px-[90px]">
+				<div class="text-dark font-medium">(W) Wymuszony przepływ, wirnik otwarty</div>
+				<div class="flex gap-10 mt-[14px]">
+					<div class="max-w-[266px] text-[10px] text-[#494949] leading-[160%]">Pompy o wymuszonym przepływie z wirnikiem otwartym. Przeznaczone do pompowania cieczy ze średnią ilością zanieczyszczeń - małe ciała stałe, nie zawierających elementów włóknistych pochodzenia organicznego</div>
+					<div class="flex gap-14">
+						<img src="./images/model.svg" alt="model" width="106" height="46">
+						<img src="./images/sketch.svg" alt="#" width="144" height="55">
+					</div>
+				</div>
+			</div>
+			<div class="mt-[45px] border-t border-primary pt-6 ps-[90px] flex gap-[105px] pb-8">
+				<img src="./images/logo.png" alt="logo" width="160" height="34" style="width: 131.76px; height: 28px;">
+				<div class="flex gap-[84px]">
+					<div class="flex flex-col">
+						<div class="flex gap-2.5 w-full">
+							<i class="fa-solid fa-phone fa-2xs text-white p-1 pb-4 bg-primary mb-3"></i>
+							<div class="text-[9px] text-[#686262] text-nowrap">Tel: +1 0214 2547 2548</div>
+						</div>
+						<div class="flex gap-2.5 w-full">
+							<i class="fa-solid fa-envelope fa-2xs text-white p-1 pb-4 bg-primary mb-3"></i>
+							<div class="text-[9px] text-[#686262]">email: example@gmai.com</div>
+						</div>
+						<div class="flex gap-2.5 w-full">
+							<i class="fa-solid fa-globe fa-2xs text-white p-1 pb-4 bg-primary mb-3"></i>
+							<div class="text-[9px] text-[#686262]">www.example.com</div>
+						</div>
+					</div>
+					<div class="flex flex-col">
+						<div class="flex gap-2.5 w-full">
+							<i class="fa-brands fa-facebook-f fa-2xs text-white pb-4 px-[5.5px] bg-primary mb-3"></i>
+							<div class="text-[9px] text-[#686262] text-nowrap">meprozetBFPiA</div>
+						</div>
+						<div class="flex gap-2.5 w-full">
+							<i class="fa-brands fa-instagram fa-2xs text-white pb-4 px-1 bg-primary mb-3"></i>
+							<div class="text-[9px] text-[#686262]">meprozet</div>
+						</div>
+						<div class="flex gap-2.5 w-full">
+							<i class="fa-brands fa-linkedin-in fa-2xs text-white pb-4 px-1 bg-primary mb-3"></i>
+							<div class="text-[9px] text-[#686262]">meprozet sp. z o.o.</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
