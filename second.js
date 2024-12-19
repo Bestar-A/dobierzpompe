@@ -1,4 +1,5 @@
-const serverDomain = "https://dobierzpompe-fserver.onrender.com/get_data/";
+// const serverDomain = "https://dobierzpompe-fserver.onrender.com/get_data/";
+const serverDomain = "http://localhost:3000/get_data/";
 
 let selectedRowId = null;
 
@@ -417,6 +418,7 @@ function renderTable(data) {
 		row.addEventListener("click", () => {
 			clearActiveRow();
 			row.classList.add("shadow-[0px_10px_30px_0px_#95959533]");
+			drawChart(item);
 			updateData(item.hydraulic_plot, item.power_plot, item.hydraulic_name, item.pump_id, item.pump_id);
 		});
 

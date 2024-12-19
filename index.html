@@ -355,8 +355,10 @@
 						<div class="mt-1 lg:mt-3 text-[12px] lg:text-sm font-medium lg:leading-[23px] text-[#A2A3A5]" id="pump_name">NURT 40 PZM 0.37/W-4*</div>
 					</div>
 					<div class="mt-[22px] lg:ps-1 lg:pe-6 relative">
-						<canvas id="hydraulics-chart" class="w-full h-[210px] lg:h-[295px] border"> </canvas>
-						<div class="absolute top-[50%] -translate-y-[50%] text-xl font-medium w-full text-center">Hydraulics Chart Goes Here</div>
+						<div class="w-full h-[210px] lg:h-[295px]">
+							<canvas id="hydraulics-chart" class="h-[210px] lg:h-[295px]"> </canvas>
+						</div>
+						<!-- <div class="absolute top-[50%] -translate-y-[50%] text-xl font-medium w-full text-center">Hydraulics Chart Goes Here</div> -->
 					</div>
 					<div class="mt-5 lg:mx-9 mx-7 flex flex-wrap gap-x-6 lg:gap-x-9 gap-y-3 lg:gap-y-0">
 						<div class="flex text-[10.5px] lg:text-sm leading-[22px] items-center gap-3 lg:gap-4">
@@ -420,7 +422,7 @@
 						<div class="font-medium lg:text-[22px] lg:leading-[36px]">Pump power and operating point</div>
 					</div>
 					<div class="mt-8 lg:mt-[92px] ps-1 pe-[14px] lg:ps-0.5 lg:pe-[18px] relative">
-						<canvas class="h-[260px] lg:h-[330px] w-full border"></canvas>
+						<canvas class="h-[260px] lg:h-[330px] w-full border" id="power-chart"></canvas>
 						<div class="absolute text-xl font-medium top-[50%] w-full text-center -translate-y-[50%]">Power Chart Goes Here</div>
 					</div>
 					<div class="mt-[22px] flex flex-wrap gap-x-8 px-10 lg:px-14 gap-y-2 lg:gap-y-0">
@@ -479,7 +481,9 @@
 			</section>
 		</main>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<script src="./index.js"></script>
+		<script src="./chart.js"></script>
 		<script src="./second.js"></script>
 	</body>
 </html>
